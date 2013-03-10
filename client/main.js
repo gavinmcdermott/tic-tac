@@ -1,42 +1,35 @@
-// assume someone clicks a button and then this happens:
-// if (!Meteor.rooms.checkRooms) {
-//   Meteor.rooms.makeRoom(ROOM_SIZE);
-// } else {
-//   Meteor.rooms._make user join an existing room_
-// }
-
+var makeUser = function(callback){
+  Players.insert({}, function(error, result){
+    callback(result);
+  });
+};
 
 Template.lobby.currentRoom = function() {
   return Session.get('currentRoom');
 };
 
 Template.lobby.showAvailableRooms = function() {
-  return Rooms.find({ current_count: { $gt: -1, $lt: ROOM_SIZE } }).fetch();
+  return Room.availableRooms();
 };
 
 Template.lobby.events = {
   "click .createRoom": function() {
     var roomName = $('input.roomName').val();
-    Meteor.call('makeRoom', ROOM_SIZE, roomName, function(error, result){
-      Session.set('currentRoom', result);
-
-      var currentPlayer = Players.insert({
-        'name': $('input.name').val(),
-        'room_id': Session.get('currentRoom')
+    Room.makeRoom(ROOM_SIZE, roomName, function(roomID){
+      makeUser(function(user) {
+        user.name = $('input.name').val();
+        user.room_id = Session.get('currentRoom');
+        Session.set('currentPlayer', user);
+        Room.addToRoom(Session.get('currentRoom'), Session.get('currentPlayer'));
       });
-      Session.set('currentPlayer', currentPlayer);
-
-      Rooms.update( {_id: Session.get('currentRoom')},
-                    {$inc: {current_count: 1} } );
-      Rooms.update( {_id: Session.get('currentRoom')},
-                    {$push: {players: Session.get('currentPlayer')} } );
-      var r = Rooms.findOne({_id: Session.get('currentRoom')});
-      console.log(r);
     });
   },
 
   'click .joinRoom': function() {
     Session.set('currentRoom', this._id);
+    // console.log('CP - ', Session.get('currentPlayer'));
+    // console.log('room id',this._id);
+    // console.log(Session.get('currentRoom'));
     Rooms.update( {_id: Session.get('currentRoom')},
                     {$inc: {current_count: 1} } );
     Rooms.update( {_id: Session.get('currentRoom')},
