@@ -33,6 +33,14 @@ Template.lobby.events = {
       var r = Rooms.findOne({_id: Session.get('currentRoom')});
       console.log(r);
     });
+  },
+
+  'click .joinRoom': function() {
+    Session.set('currentRoom', this._id);
+    Rooms.update( {_id: Session.get('currentRoom')},
+                    {$inc: {current_count: 1} } );
+    Rooms.update( {_id: Session.get('currentRoom')},
+                  {$push: {players: Session.get('currentPlayer')} } );
   }
 };
 

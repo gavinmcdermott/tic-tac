@@ -56,9 +56,16 @@
         </div>
       </div>
     </div><br />
-    {{#each showAvailableRooms}}
-      <div>{{ name }}</div>
-    {{/each}}
+    <div>
+      Or join an existing one:
+      {{#each showAvailableRooms}}
+        <div>
+          {{ name }} |
+          {{ current_count }} |
+          <button class="btn joinRoom">Join</button>
+        </div>
+      {{/each}}
+    </div>
   {{/unless}}
 </template>
 
