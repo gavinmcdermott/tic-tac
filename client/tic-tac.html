@@ -55,7 +55,10 @@
           <button type="submit" class="btn createRoom">Create a Room</button>
         </div>
       </div>
-    </div>
+    </div><br />
+    {{#each showAvailableRooms}}
+      <div>{{ name }}</div>
+    {{/each}}
   {{/unless}}
 </template>
 

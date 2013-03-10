@@ -1,11 +1,11 @@
 Meteor.startup(function () {
   Meteor.methods({
-    availableRooms: function() {
-      return Rooms.find({ current_count: { $gt: -1, $lt: 4 } }).fetch();
-    },
+    // availableRooms: function() {
+    //   Rooms.find({ current_count: { $gt: -1, $lt: ROOM_SIZE } }).fetch();
+    // },
 
     availableRoomCount: function() {
-      return Rooms.find({ current_count: { $gt: -1, $lt: 4 } }).fetch().length;
+      return Rooms.find({ current_count: { $gt: -1, $lt: ROOM_SIZE } }).fetch().length;
     },
 
     makeRoom: function(size, roomName) {

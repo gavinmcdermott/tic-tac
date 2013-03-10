@@ -10,6 +10,10 @@ Template.lobby.currentRoom = function() {
   return Session.get('currentRoom');
 };
 
+Template.lobby.showAvailableRooms = function() {
+  return Rooms.find({ current_count: { $gt: -1, $lt: ROOM_SIZE } }).fetch();
+};
+
 Template.lobby.events = {
   "click .createRoom": function() {
     var roomName = $('input.roomName').val();

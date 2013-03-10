@@ -1,4 +1,4 @@
-var ROOM_SIZE = 2;
+ROOM_SIZE = 2;
 var Games = new Meteor.Collection('games');
 // { game_id: 123, room_id: 123 }
 var Rooms = new Meteor.Collection('rooms');
