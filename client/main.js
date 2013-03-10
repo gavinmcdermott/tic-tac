@@ -75,6 +75,10 @@ Template.room.events = {
                   {$unset: playerLeaving }, function(){
                     Rooms.update( {_id: Session.get('currentRoom')},
                     {$pull: {'players': null } }, function(){
+                      var room = Rooms.findOne({_id: Session.get('currentRoom')});
+                      if (!room.players.length) {
+                        Rooms.remove({_id: Session.get('currentRoom')});
+                      }
                       Session.set('currentRoom', null);
                       console.log("the currentRoom is now: ", Session.get('currentRoom'));
                     } );

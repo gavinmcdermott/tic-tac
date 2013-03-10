@@ -4,4 +4,4 @@ var Games = new Meteor.Collection('games');
 var Rooms = new Meteor.Collection('rooms');
 // { room_id: 10, players: [player_id] }
 var Players = new Meteor.Collection('players');
-  // { player_id: 123, name: 'matt', room_id: 123 }
+// { player_id: 123, name: 'matt', room_id: 123 }
