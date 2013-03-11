@@ -1,0 +1,32 @@
+<head>
+  <title>tic-tac</title>
+</head>
+
+<body>
+  <div class="container">
+    {{> page}}
+  </div>
+</body>
+
+<template name="page">
+  <div class="row">
+    <div class="span5">
+      {{> game}}
+    </div>
+    <div class="span7">
+      {{> lobby}}
+    </div>
+  </div>
+</template>
+
+<template name="game">
+  {{#if currentRoom}}
+    <div>we are in a room</div>
+  {{/if}}
+
+  {{#unless currentRoom}}
+    <div>Please make a room to join</div>
+  {{/unless}}
+</template>
+
+

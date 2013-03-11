@@ -1,5 +1,3 @@
-ROOM_SIZE = 2;
-
 Room = {};
 Room.availableRooms = function() {
   return Rooms.find({ current_count: { $gt: -1, $lt: ROOM_SIZE } }).fetch();
@@ -8,8 +6,8 @@ Room.availableRoomCount = function() {
   return Rooms.find({ current_count: { $gt: -1, $lt: ROOM_SIZE } }).fetch().length;
 };
 Room.makeRoom = function(size, roomName, callback) {
-  var room = Rooms.insert({
-    'name': roomName,
+  Rooms.insert({
+    'name': roomName || null,
     'players': [],
     'current_count': 0,
     'size': size

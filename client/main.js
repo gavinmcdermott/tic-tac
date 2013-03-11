@@ -1,3 +1,5 @@
+ROOM_SIZE = 2;
+
 var makeUser = function(){
   return Players.insert({});
 };

@@ -1,0 +1,43 @@
+<template name="lobby">
+  {{#if currentRoom}}
+    {{> room}}
+  {{/if}}
+
+  {{#unless currentRoom}}
+    <div class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label">Name</label>
+        <div class="controls">
+          <input type="text" class="name" placeholder="your name">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Room Name</label>
+        <div class="controls">
+          <input type="text" class="roomName" placeholder="room name">
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn createRoom">Create a Room</button>
+        </div>
+      </div>
+    </div><br />
+    <div>
+      Or join an existing one:
+      {{#each showAvailableRooms}}
+        <div>
+          {{ name }} |
+          {{ current_count }} |
+          <button class="btn joinRoom">Join</button>
+        </div>
+      {{/each}}
+    </div>
+  {{/unless}}
+</template>
+
+<template name="room">
+  Your current room is: {{ roomName }} <br />
+  And there are {{ roomPlayerCount }} people in this room <br />
+  <button class="btn leaveRoom">Leave Room</button>
+</template>
