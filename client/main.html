@@ -14,7 +14,15 @@
       {{> game}}
     </div>
     <div class="span7">
-      {{> lobby}}
+
+      {{#if currentUser}}
+        {{> lobby}}
+      {{/if}}
+
+      {{#unless currentUser}}
+        {{loginButtons}}
+      {{/unless}}
+
     </div>
   </div>
 </template>

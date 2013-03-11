@@ -5,12 +5,16 @@
 
   {{#unless currentRoom}}
     <div class="form-horizontal">
-      <div class="control-group">
+<!--       <div class="control-group">
         <label class="control-label">Name</label>
         <div class="controls">
           <input type="text" class="name" placeholder="your name">
         </div>
-      </div>
+      </div> -->
+      {{#if currentUser}}
+        {{loginButtons}}
+      {{/if}}
+
       <div class="control-group">
         <label class="control-label">Room Name</label>
         <div class="controls">

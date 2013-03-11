@@ -1,10 +1,7 @@
-ROOM_SIZE = 2;
+// console.log('current user ID is: ',Meteor.userId());
+// Session.set('currentPlayer', Meteor.userId());
+// var player = Meteor.user();
 
-var makeUser = function(){
-  return Players.insert({});
-};
-var player = makeUser();
-Session.set('currentPlayer', player);
 
 Template.lobby.currentRoom = function() {
   return Session.get('currentRoom');
@@ -17,17 +14,17 @@ Template.lobby.showAvailableRooms = function() {
 Template.lobby.events = {
   "click .createRoom": function() {
     var roomName = $('input.roomName').val();
-    Room.makeRoom(ROOM_SIZE, roomName, function(roomID){
-      Room.createSession(roomID);
-      player.name = $('input.name').val();
-      player.room_id = Session.get('currentRoom');
-      Room.addToRoom(Session.get('currentRoom'), Session.get('currentPlayer'));
-    });
+    Room.makeRoom(function(roomID){
+      Room.createRoomSession(roomID);
+      Meteor.users.update({_id:Meteor.userId()}, {$set:{"profile.currentRoom": Session.get('currentRoom')}});
+      Room.addToRoom(Meteor.userId());
+    }, roomName);
   },
 
   'click .joinRoom': function() {
-    Room.createSession(this._id);
-    Room.addToRoom(this._id, Session.get('currentPlayer'));
+    Room.createRoomSession(this._id);
+    Meteor.users.update({_id: Meteor.userId() }, {$set:{"profile.currentRoom": Session.get('currentRoom')}});
+    Room.addToRoom(Meteor.userId());
   }
 };
 
@@ -47,7 +44,7 @@ Template.room.roomPlayerCount = function() {
 
 Template.room.events = {
   'click .leaveRoom': function() {
-    Room.removeFromRoom(Session.get('currentRoom'), Session.get('currentPlayer'));
+    Room.removeFromRoom(Meteor.userId());
   }
 };
 

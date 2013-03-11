@@ -8,3 +8,6 @@ insecure
 preserve-inputs
 bootstrap
 jquery
+rooms
+accounts-ui
+accounts-password
