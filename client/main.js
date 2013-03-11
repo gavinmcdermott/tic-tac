@@ -1,7 +1,12 @@
-// console.log('current user ID is: ',Meteor.userId());
-// Session.set('currentPlayer', Meteor.userId());
-// var player = Meteor.user();
-
+Meteor.autorun(function () {
+  if (Meteor.userId()) {
+    // console.log('logged in');
+    Session.set('currentUser', Meteor.userId());
+  } else {
+    // console.log('logged out');
+    Session.set('currentUser', null);
+  }
+});
 
 Template.lobby.currentRoom = function() {
   return Session.get('currentRoom');
@@ -45,6 +50,7 @@ Template.room.roomPlayerCount = function() {
 Template.room.events = {
   'click .leaveRoom': function() {
     Room.removeFromRoom(Meteor.userId());
+    Meteor.users.update({_id: Meteor.userId() }, {$set:{"profile.currentRoom": null}});
   }
 };
 
