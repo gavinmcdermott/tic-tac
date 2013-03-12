@@ -43,9 +43,9 @@ Template.room.roomName = function() {
   return room && room.name;
 };
 
-Template.room.roomPlayerCount = function() {
+Template.room.currentCount = function() {
   var room = Rooms.findOne({_id: Session.get('currentRoom')});
-  return room && room.current_count;
+  return room && room.currentCount;
 };
 
 Template.room.events = {
