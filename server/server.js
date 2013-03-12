@@ -1,29 +1,17 @@
-// Meteor.users.remove({});
 Meteor.setInterval(function(){
 
   var now = new Date().getTime();
   now = now - 4000;
-  console.log(now);
-  var expiredUsers = LoggedUsers.find({}, {stamp: {$lt: now } } ).fetch();
+  // console.log(now);
+  var expiredUsers = LoggedUsers.find( {stamp: {$lt: now } } ).fetch();
+  console.log("in setInterval");
   for (var i = 0; i < expiredUsers.length; i++) {
+    console.log("about to log expiredUsers");
+    console.log('this guy is expired', i + ' - ' + expiredUsers[i].id);
     // console.log(expiredUsers[i]);
-    // Room.find({users: {}})
-    Rooms.update({}, {$pull: {'users': expiredUsers[i]._id} } );
+    console.log(now);
+    console.log(expiredUsers[i].stamp < now);
+    Rooms.update({}, {$pull: {'users': expiredUsers[i].id} } );
+    LoggedUsers.remove({'id': expiredUsers[i].id});
   }
 }, 4000);
-
-// http://stackoverflow.com/questions/12333857/meteor-client-disconnected-event-on-server
-Meteor.default_server.stream_server.register( Meteor.bindEnvironment( function(socket) {
-    socket.on('close', function(){
-
-      // console.log(socket);
-      // Fiber(function() {
-
-      // }).run();
-
-    }, function(error) {
-      console.log(error);
-    });
-  }, function(err) {
-    console.log(err);
-} ) );

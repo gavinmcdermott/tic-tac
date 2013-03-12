@@ -19,7 +19,8 @@ Template.lobby.currentRoom = function() {
 };
 
 Template.lobby.showAvailableRooms = function() {
-  return Room.availableRooms();
+  // return Room.availableRooms();
+  return Rooms.find({}).fetch();
 };
 
 Template.lobby.events = {
@@ -44,8 +45,9 @@ Template.room.roomName = function() {
 };
 
 Template.room.currentCount = function() {
-  var room = Rooms.findOne({_id: Session.get('currentRoom')});
-  return room && room.currentCount;
+  // var room = Rooms.findOne({_id: Session.get('currentRoom')});
+  return Room.currentSize(Session.get('currentRoom'));
+  // return room && room.currentCount;
 };
 
 Template.room.events = {
