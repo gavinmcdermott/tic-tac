@@ -1,9 +1,15 @@
 Meteor.autorun(function () {
-  if (Meteor.userId()) {
-    // console.log('logged in');
+  if (Meteor.user()) {
     Session.set('currentUser', Meteor.userId());
+    if (Meteor.user().profile) {
+      if (Meteor.user().profile.currentRoom !== null) {
+        Session.set('currentRoom', Meteor.user().profile.currentRoom);
+      }
+      if (Meteor.user().profile.currentRoom === null) {
+        Session.set('currentRoom', null);
+      }
+    }
   } else {
-    // console.log('logged out');
     Session.set('currentUser', null);
   }
 });
@@ -19,17 +25,12 @@ Template.lobby.showAvailableRooms = function() {
 Template.lobby.events = {
   "click .createRoom": function() {
     var roomName = $('input.roomName').val();
-    Room.makeRoom(function(roomID){
-      Room.createRoomSession(roomID);
-      Meteor.users.update({_id:Meteor.userId()}, {$set:{"profile.currentRoom": Session.get('currentRoom')}});
-      Room.addToRoom(Meteor.userId());
-    }, roomName);
+    Room.makeRoom(roomName);
   },
 
   'click .joinRoom': function() {
-    Room.createRoomSession(this._id);
-    Meteor.users.update({_id: Meteor.userId() }, {$set:{"profile.currentRoom": Session.get('currentRoom')}});
-    Room.addToRoom(Meteor.userId());
+    Room.addUser(this._id, Session.get('currentUser'));
+    Meteor.users.update({_id: Session.get('currentUser') }, {$set:{"profile.currentRoom": this._id}});
   }
 };
 

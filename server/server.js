@@ -4,7 +4,7 @@
 Meteor.default_server.stream_server.register( Meteor.bindEnvironment( function(socket) {
     socket.on('close', function(){
 
-      console.log(socket);
+      // console.log(socket);
       // Fiber(function() {
 
       // }).run();
