@@ -1,11 +1,9 @@
 <template name="lobby">
   {{#if inRoom}}
     {{> room}}
-  {{/if}}
-
-  {{#unless inRoom}}
+  {{^}}
     {{> createRoom}}
     <br />
     {{> allRooms}}
-  {{/unless}}
+  {{/if}}
 </template>

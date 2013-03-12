@@ -21,7 +21,10 @@ Template.lobby.inRoom = function() {
 Template.createRoom.events = {
   "click .create": function() {
     var roomName = $('input.roomName').val();
-    Room.makeRoom(roomName);
+    Room.makeRoom(roomName, function(newRoomId){
+      Room.addUser(newRoomId, Session.get('currentUser'));
+      Meteor.users.update({_id: Session.get('currentUser') }, {$set:{"profile.currentRoom": newRoomId}});
+    });
   }
 };
 
@@ -31,7 +34,7 @@ Template.allRooms.rooms = function() {
 };
 
 Template.allRooms.events = {
-  'click .joinRoom': function() {
+  'click .join': function() {
     Room.addUser(this._id, Session.get('currentUser'));
     Meteor.users.update({_id: Session.get('currentUser') }, {$set:{"profile.currentRoom": this._id}});
   }
@@ -63,3 +66,37 @@ Template.room.events = {
     Meteor.users.update({_id: Meteor.userId() }, {$set:{"profile.currentRoom": null}});
   }
 };
+
+Template.roomChat.messages = function() {
+  return Messages.find({'room_id' : Session.get("currentRoom")}, {sort: {created_at: 1}});
+};
+
+Template.roomChat.events = {
+  'click .submit': function() {
+    var msg = $('.room-msg').val();
+    $('.room-msg').val('');
+    Messages.insert({
+      'message': msg,
+      'user_id': Session.get('currentUser'),
+      'room_id': Session.get('currentRoom'),
+      'created_at': new Date().getTime()
+    }, function(e,r) {
+      // implement scroll
+      // $('.msg-box').scrollTo($('.msg-box').height());
+      // var height = $('#scroll')[0].scrollHeight;
+      // $('#scroll').scrollTop(height);
+    });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+

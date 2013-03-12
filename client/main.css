@@ -1,1 +1,5 @@
 /* CSS declarations go here */
+.msg-box {
+  height: 250px;
+  overflow: scroll;
+}

@@ -3,7 +3,7 @@
   <br />
   {{> roomChat}}
   <br />
-  <button class="leave">Leave Room</button>
+  <button class="btn leave">Leave Room</button>
 </template>
 
 <template name="roomOverview">
@@ -19,5 +19,13 @@
 </template> -->
 
 <template name="roomChat">
-  ROOM CHAT BOX TO GO HERE
+  <div class="msg-box">
+  {{#each messages}}
+    Message: {{ message }} <br />
+    sent: {{ created_at }} <br />
+  {{/each}}
+  </div><br />
+  <label class="label">Enter Message</label><br />
+  <input type="text" class="room-msg" placeholder="Send a message"><br />
+  <button type="submit" class="btn submit">Send to Room</button>
 </template>

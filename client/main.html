@@ -8,10 +8,8 @@
       {{ loginButtons }}
       <br />
       {{> lobby }}
-    {{/if}}
-
-    {{#unless currentUser}}
+    {{^}}
       {{ loginButtons }}
-    {{/unless}}
+    {{/if}}
   </div>
 </body>
