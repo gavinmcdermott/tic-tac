@@ -1,5 +1,23 @@
 <template name="room">
-  Room: {{ roomName }} <br />
-  Has: {{ currentCount }} people <br />
+  {{> roomOverview}}
+  <br />
+  {{> roomChat}}
+  <br />
   <button class="leave">Leave Room</button>
+</template>
+
+<template name="roomOverview">
+  Room: {{ roomName }} <br />
+  Has: {{ currentCount }} people<br />
+  <!-- roomUsers to go here -->
+</template>
+
+<!-- <template name="roomUsers">
+  {{#each user}}
+    {{ _id }},
+  {{/each}}
+</template> -->
+
+<template name="roomChat">
+  ROOM CHAT BOX TO GO HERE
 </template>
