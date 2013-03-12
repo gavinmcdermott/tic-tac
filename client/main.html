@@ -4,37 +4,13 @@
 
 <body>
   <div class="container">
-    {{> page}}
+    {{#if currentUser}}
+      {{ loginButtons }}
+      {{> lobby }}
+    {{/if}}
+
+    {{#unless currentUser}}
+      {{ loginButtons }}
+    {{/unless}}
   </div>
 </body>
-
-<template name="page">
-  <div class="row">
-    <div class="span5">
-      {{> game}}
-    </div>
-    <div class="span7">
-
-      {{#if currentUser}}
-        {{> lobby}}
-      {{/if}}
-
-      {{#unless currentUser}}
-        {{loginButtons}}
-      {{/unless}}
-
-    </div>
-  </div>
-</template>
-
-<template name="game">
-  {{#if currentRoom}}
-    <div>we are in a room</div>
-  {{/if}}
-
-  {{#unless currentRoom}}
-    <div>Please make a room to join</div>
-  {{/unless}}
-</template>
-
-

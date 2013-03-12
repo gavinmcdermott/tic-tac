@@ -14,29 +14,27 @@ Meteor.autorun(function () {
   }
 });
 
-Template.lobby.currentRoom = function() {
+Template.lobby.inRoom = function() {
   return Session.get('currentRoom');
 };
 
-Template.lobby.showAvailableRooms = function() {
+Template.createRoom.events = {
+  "click .create": function() {
+    var roomName = $('input.roomName').val();
+    Room.makeRoom(roomName);
+  }
+};
+
+Template.allRooms.rooms = function() {
   // return Room.availableRooms();
   return Rooms.find({}).fetch();
 };
 
-Template.lobby.events = {
-  "click .createRoom": function() {
-    var roomName = $('input.roomName').val();
-    Room.makeRoom(roomName);
-  },
-
+Template.allRooms.events = {
   'click .joinRoom': function() {
     Room.addUser(this._id, Session.get('currentUser'));
     Meteor.users.update({_id: Session.get('currentUser') }, {$set:{"profile.currentRoom": this._id}});
   }
-};
-
-Template.game.currentRoom = function() {
-  return Session.get('currentRoom');
 };
 
 Template.room.roomName = function() {
@@ -51,7 +49,7 @@ Template.room.currentCount = function() {
 };
 
 Template.room.events = {
-  'click .leaveRoom': function() {
+  'click .leave': function() {
     Room.removeFromRoom(Meteor.userId());
     Meteor.users.update({_id: Meteor.userId() }, {$set:{"profile.currentRoom": null}});
   }
