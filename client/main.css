@@ -1,5 +1,6 @@
-/* CSS declarations go here */
-.msg-box {
-  height: 250px;
-  overflow: scroll;
+.container {
+  width: 900px;
+  height: 600px;
+  margin: 0 auto;
+  background-color: #eeeeee;
 }
