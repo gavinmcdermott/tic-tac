@@ -6,8 +6,21 @@
   <div class="container">
     {{ loginButtons }}
     {{#if currentUser}}
-      <br />
-      {{> lobby }}
+      {{> lobby}}
     {{/if}}
   </div>
 </body>
+
+<!--  -->
+<template name="lobby">
+  {{#if inRoom}}
+    {{> room}}
+    <div>
+      SHOW GAME
+    </div>
+  {{^}}
+    {{> createRoom}}
+    <br />
+    {{> allRooms}}
+  {{/if}}
+</template>
