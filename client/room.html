@@ -9,23 +9,23 @@
 <template name="roomOverview">
   Room: {{ roomName }} <br />
   Has: {{ currentCount }} people<br />
-  <!-- roomUsers to go here -->
 </template>
 
-<!-- <template name="roomUsers">
-  {{#each user}}
-    {{ _id }},
-  {{/each}}
-</template> -->
+
 
 <template name="roomChat">
   <div class="msg-box">
   {{#each messages}}
     Message: {{ message }} <br />
-    sent: {{ created_at }} <br />
+    uId: {{ user_id }} <br />
+    sent: {{ timestamp }} <br /><br /><br />
   {{/each}}
   </div><br />
   <label class="label">Enter Message</label><br />
   <input type="text" class="room-msg" placeholder="Send a message"><br />
   <button type="submit" class="btn submit">Send to Room</button>
 </template>
+
+<!-- <template name="user">
+<p>{{_id}}</p>
+</template> -->

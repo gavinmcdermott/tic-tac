@@ -12,6 +12,15 @@ Meteor.autorun(function () {
   } else {
     Session.set('currentUser', null);
   }
+
+  if (Session.get('currentRoom') !== null) {
+    console.log('we have a room!');
+    console.log(window.fuckedUp = Rooms.findOne({_id: Session.get('currentRoom')}, {users: 1, _id: 0}));
+    // window.fuckedUpUsers = fuckedUp && fuckedUp;
+    // console.log(fuckedUpUsers);
+  } else {
+    console.log('now we dont');
+  }
 });
 
 Template.lobby.inRoom = function() {
@@ -20,7 +29,8 @@ Template.lobby.inRoom = function() {
 
 Template.createRoom.events = {
   "click .create": function() {
-    var roomName = $('input.roomName').val();
+    var roomName = $('input.textInput').val();
+    console.log(roomName);
     Room.makeRoom(roomName, function(newRoomId){
       Room.addUser(newRoomId, Session.get('currentUser'));
       Meteor.users.update({_id: Session.get('currentUser') }, {$set:{"profile.currentRoom": newRoomId}});
@@ -47,7 +57,9 @@ Template.roomOverview.roomName = function() {
 
 Template.roomOverview.currentCount = function() {
   // var room = Rooms.findOne({_id: Session.get('currentRoom')});
-  return Room.currentSize(Session.get('currentRoom'));
+  if(Session.get('currentRoom')){
+    return Room.currentSize(Session.get('currentRoom'));
+  }
   // return room && room.currentCount;
 };
 
@@ -79,7 +91,7 @@ Template.roomChat.events = {
       'message': msg,
       'user_id': Session.get('currentUser'),
       'room_id': Session.get('currentRoom'),
-      'created_at': new Date().getTime()
+      'timestamp': new Date().getTime(),
     }, function(e,r) {
       // implement scroll
       // $('.msg-box').scrollTo($('.msg-box').height());
