@@ -12,15 +12,6 @@ Meteor.autorun(function () {
   } else {
     Session.set('currentUser', null);
   }
-
-  if (Session.get('currentRoom') !== null) {
-    console.log('we have a room!');
-    console.log(window.fuckedUp = Rooms.findOne({_id: Session.get('currentRoom')}, {users: 1, _id: 0}));
-    // window.fuckedUpUsers = fuckedUp && fuckedUp;
-    // console.log(fuckedUpUsers);
-  } else {
-    console.log('now we dont');
-  }
 });
 
 Template.lobby.inRoom = function() {
@@ -60,6 +51,7 @@ Template.roomOverview.currentCount = function() {
   if(Session.get('currentRoom')){
     return Room.currentSize(Session.get('currentRoom'));
   }
+
   // return room && room.currentCount;
 };
 

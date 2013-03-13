@@ -4,12 +4,10 @@
 
 <body>
   <div class="container">
+    {{ loginButtons }}
     {{#if currentUser}}
-      {{ loginButtons }}
       <br />
       {{> lobby }}
-    {{^}}
-      {{ loginButtons }}
     {{/if}}
   </div>
 </body>
