@@ -6,7 +6,15 @@
   <div class="container">
     {{ loginButtons }} <br>
     {{#if currentUser}}
+      {{ createRoomControls }}
+      {{ rooms }}
       {{> rooms}}
     {{/if}}
   </div>
 </body>
+
+<template name="rooms">
+  {{#if inRoom}}
+    {{> room}}
+  {{/if}}
+</template>
